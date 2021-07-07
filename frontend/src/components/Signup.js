@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import { useState } from "react";
 import Link from "@material-ui/core/Link";
 import { FormControl } from "@material-ui/core";
 import { RadioGroup } from "@material-ui/core";
@@ -51,8 +51,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialFormValues = {
+  id: 0,
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  cpassword: "",
+  employeeNumber: "",
+};
+
 export default function Signup() {
+  const [radioValue, setRadioValue] = useState("smc");
+  const [values, setValues] = useState(initialFormValues);
+  const handleRadioChange = (event) => {
+    setRadioValue(event.target.value);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+    // console.log("New state is ");
+    // console.log(values);
+  };
+
   const classes = useStyles();
+
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    const finalFormData = {
+      ...values,
+      radioValue: radioValue,
+    };
+    console.log(":DDD");
+    console.log(finalFormData);
+  };
 
   return (
     <Container
@@ -80,6 +116,7 @@ export default function Signup() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -91,6 +128,7 @@ export default function Signup() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,6 +140,7 @@ export default function Signup() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,6 +153,7 @@ export default function Signup() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -121,8 +161,9 @@ export default function Signup() {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
+                name="cpassword"
                 label="Confirm Password"
+                onChange={handleInputChange}
                 type="password"
                 id="cpassword"
                 autoComplete="confirm-password"
@@ -133,16 +174,22 @@ export default function Signup() {
                 variant="outlined"
                 required
                 fullWidth
-                name="empnumber"
+                name="employeeNumber"
                 label="Employee Number"
                 // type="cpassword"
-                id="empnumber"
+                id="employeeNumber"
                 autoComplete="Employee Number"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl component="fieldset">
-                <RadioGroup aria-label="userTtpe" name="userType">
+                <RadioGroup
+                  aria-label="userTtpe"
+                  name="userType"
+                  value={radioValue}
+                  onChange={handleRadioChange}
+                >
                   <FormControlLabel
                     value="smc"
                     control={<Radio />}
@@ -162,6 +209,7 @@ export default function Signup() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={formSubmit}
             >
               Sign Up
             </Button>
