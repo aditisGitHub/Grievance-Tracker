@@ -8,7 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Link from "@material-ui/core/Link";
 import { FormControl } from "@material-ui/core";
 import { RadioGroup } from "@material-ui/core";
-import { Radio } from '@material-ui/core';
+import { Radio } from "@material-ui/core";
 
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -117,30 +117,61 @@ export default function Signup() {
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Confirm Password"
+                type="password"
+                id="cpassword"
+                autoComplete="confirm-password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="empnumber"
+                label="Employee Number"
+                // type="cpassword"
+                id="empnumber"
+                autoComplete="Employee Number"
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControl component="fieldset">
-                
-                <RadioGroup aria-label="userTtpe" name="userType" >
-                  <FormControlLabel value="smc" control={<Radio />} label="SMC Employee" />
-                  <FormControlLabel value="govt" control={<Radio />} label="Government Employee" />
+                <RadioGroup aria-label="userTtpe" name="userType">
+                  <FormControlLabel
+                    value="smc"
+                    control={<Radio />}
+                    label="SMC Employee"
+                  />
+                  <FormControlLabel
+                    value="govt"
+                    control={<Radio />}
+                    label="Government Employee"
+                  />
                 </RadioGroup>
               </FormControl>
             </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <RouterLink to="/signin" variant="body2">
-                Already have an account? Sign in
-              </RouterLink>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <RouterLink to="/signin" variant="body2">
+                  Already have an account? Sign in
+                </RouterLink>
+              </Grid>
             </Grid>
-          </Grid>
           </Grid>
         </form>
       </div>
