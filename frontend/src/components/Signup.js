@@ -47,14 +47,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function Signup() {
   const classes = useStyles();
 
   return (
     <Container
       component="main"
       maxWidth="xs"
-      style={{ height: "84vh", backgroundColor: "#f3f4f8" }}
+      style={{ height: "84vh", backgroundColor: "white" }}
     >
       <CssBaseline />
       <div className={classes.paper}>
