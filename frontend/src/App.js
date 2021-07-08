@@ -2,6 +2,7 @@ import React from "react";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
@@ -9,6 +10,9 @@ function App() {
       <Switch>
         <Route exact path="/signin">
           <Signin />
+        </Route>
+        <Route exact path="/">
+          <Dashboard />
         </Route>
 
         <Route exact path="/signup">
