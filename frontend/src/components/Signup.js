@@ -62,6 +62,7 @@ const initialFormValues = {
   password: "",
   cpassword: "",
   employeeNumber: "",
+  userType: ""
 };
 
 export default function Signup() {
@@ -71,13 +72,10 @@ export default function Signup() {
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
   // const uid = currentUser.uid;
-  const [radioValue, setRadioValue] = useState("smc");
+  
   const [values, setValues] = useState(initialFormValues);
 
-  const handleRadioChange = (event) => {
-    setRadioValue(event.target.value);
-  };
-
+ 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
@@ -92,19 +90,16 @@ export default function Signup() {
 
   const formSubmit = async (e) => {
     e.preventDefault();
-    const finalFormData = {
-      ...values,
-      radioValue: radioValue,
-    };
+    
 
-    if (finalFormData.password !== finalFormData.cpassword) {
+    if (values.password !== values.cpassword) {
       return setError("Passwords do not match");
     }
 
     try {
       setError("");
       setLoading(true);
-      await signup(finalFormData.email, finalFormData.password);
+      await signup(values);
       console.log("CUrrent user is ---- after signing up ", currentUser);
       history.push("/");
     } catch {
@@ -213,8 +208,8 @@ export default function Signup() {
                 <RadioGroup
                   aria-label="userTtpe"
                   name="userType"
-                  value={radioValue}
-                  onChange={handleRadioChange}
+                  
+                  onChange={handleInputChange}
                 >
                   <FormControlLabel
                     value="smc"
