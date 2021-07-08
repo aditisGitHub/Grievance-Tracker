@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +13,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink , useHistory} from "react-router-dom";
+import { useAuth } from "../context/AuthContext"
 
 function Copyright() {
   return (
@@ -47,9 +49,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function Signin() {
   const classes = useStyles();
 
+  const initialUser = {
+    email: '',
+    password: ''
+  }
+  const [credentials, setCredentials] = useState(initialUser)
+  const {signin}  = useAuth()
+ 
+  const history = useHistory()
+  
+  function changeHandler (event) {
+    setCredentials (
+      {...credentials, [event.target.name]: event.target.value}
+    )
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    
+    try {
+      
+      await signin(credentials.email, credentials.password)
+      console.log(credentials)
+      history.push("/")
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  
   return (
     <Container component="main" maxWidth="xs" style={{ height: "84vh" }}>
       <CssBaseline />
@@ -74,6 +108,8 @@ export default function Signin() {
             name="email"
             autoComplete="email"
             autoFocus
+           
+            onChange={changeHandler}
           />
           <TextField
             variant="outlined"
@@ -85,6 +121,8 @@ export default function Signin() {
             type="password"
             id="password"
             autoComplete="current-password"
+            
+            onChange={changeHandler}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -96,6 +134,7 @@ export default function Signin() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
