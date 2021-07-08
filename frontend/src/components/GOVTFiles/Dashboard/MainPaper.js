@@ -38,13 +38,13 @@ export default function MainPaper() {
           {/* <Typography color="textSecondary" variant="h2" component="h2">
             Sales
           </Typography> */}
-          <Typography
-            variant="h3"
+          {/* <Typography
+            variant="h4"
             // component="h2"
             style={{ marginRight: "50px" }}
           >
-            $38,002
-          </Typography>
+            Quaterly Sales
+          </Typography> */}
           <CardContent>
             {/* Card */}
             <GraphLine />
