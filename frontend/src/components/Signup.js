@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,7 +17,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 
 function Copyright() {
   return (
@@ -62,11 +64,16 @@ const initialFormValues = {
   employeeNumber: "",
 };
 
-
 export default function Signup() {
+  const history = useHistory();
+
+  const { currentUser, signup } = useAuth();
+  const [loading, setLoading] = useState();
+  const [error, setError] = useState();
+  // const uid = currentUser.uid;
   const [radioValue, setRadioValue] = useState("smc");
   const [values, setValues] = useState(initialFormValues);
-  
+
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
@@ -89,8 +96,21 @@ export default function Signup() {
       ...values,
       radioValue: radioValue,
     };
-    
-  
+
+    if (finalFormData.password !== finalFormData.cpassword) {
+      return setError("Passwords do not match");
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+      await signup(finalFormData.email, finalFormData.password);
+      console.log("CUrrent user is ---- after signing up ", currentUser);
+      history.push("/");
+    } catch {
+      setError("Failed to create user");
+    }
+    setLoading(false);
   };
 
   return (
@@ -109,6 +129,9 @@ export default function Signup() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              {error && <h1>{error}</h1>}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
