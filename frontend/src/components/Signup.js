@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from 'axios';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -61,9 +62,11 @@ const initialFormValues = {
   employeeNumber: "",
 };
 
+
 export default function Signup() {
   const [radioValue, setRadioValue] = useState("smc");
   const [values, setValues] = useState(initialFormValues);
+  
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
   };
@@ -86,8 +89,8 @@ export default function Signup() {
       ...values,
       radioValue: radioValue,
     };
-    console.log(":DDD");
-    console.log(finalFormData);
+    
+  
   };
 
   return (
