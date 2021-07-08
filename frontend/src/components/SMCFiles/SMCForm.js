@@ -12,6 +12,8 @@ import Switch from "@material-ui/core/Switch";
 import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { db } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   createMuiTheme,
@@ -88,6 +90,7 @@ const initialFValues = {
 };
 
 export default function SMCForm() {
+  const { currentUser } = useAuth();
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -149,49 +152,44 @@ export default function SMCForm() {
       selectedDatee: selectedDate,
       sliderValuee: sliderValue,
     };
-    console.log("FATAAAAA");
+    console.log("DATAAAAA");
     console.log(finalFormData);
 
-    const {
-      fullName,
-      branch,
-      grName,
-      checkedA,
-      checkedB,
-      checkedC,
-      checkedD,
-      email,
-      mobile,
-      isSwitched,
-      radioValuee,
-      selectedDatee,
-      sliderValuee,
-    } = finalFormData;
-    const res = await fetch("register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName,
-        branch,
-        grName,
-        checkedA,
-        checkedB,
-        checkedC,
-        checkedD,
-        email,
-        mobile,
-        isSwitched,
-        radioValuee,
-        selectedDatee,
-        sliderValuee,
-      }),
-    });
-    console.log("Aaryan");
-    console.log(typeof radioValuee);
-    console.log(typeof selectedDatee);
-    const data = await res.json();
+    db.collection("userFormData")
+      .doc(currentUser.uid)
+      .set(finalFormData)
+      .then(() => {
+        console.log("Data uploaded successfully");
+      })
+      .catch((err) => {
+        console.log("ERRRRRRRRRR", err);
+      });
+
+    // const res = await fetch("register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     fullName,
+    //     branch,
+    //     grName,
+    //     checkedA,
+    //     checkedB,
+    //     checkedC,
+    //     checkedD,
+    //     email,
+    //     mobile,
+    //     isSwitched,
+    //     radioValuee,
+    //     selectedDatee,
+    //     sliderValuee,
+    //   }),
+    // });
+    // console.log("Aaryan");
+    // console.log(typeof radioValuee);
+    // console.log(typeof selectedDatee);
+    // const data = await res.json();
   };
   const themee = useTheme();
   const matches = useMediaQuery(themee.breakpoints.up("sm"));
