@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../firebase";
+import SMCProfile from "./SMCProfile";
+import GOVTProfile from "./GOVTProfile";
 
 export default function Profile() {
   const [userData, setUserData] = useState("");
@@ -43,9 +45,13 @@ export default function Profile() {
   return (
     <div>
       {userData && userData.userType === "govt" ? (
-        <h1>GOVT COMPONENT</h1>
+        <h1>
+          <GOVTProfile />
+        </h1>
       ) : (
-        <h2>SMCC Component</h2>
+        <h2>
+          <SMCProfile />
+        </h2>
       )}
 
       {/* {if(userData.userType == "govt") {
