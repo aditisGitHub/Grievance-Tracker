@@ -12,7 +12,7 @@ export default function Profile() {
   async function logoutHandler() {
     try {
       await logout();
-      history.pushState("/signin");
+      history.push("/signin");
     } catch {
       console.log("Error in logging out");
     }
@@ -54,15 +54,8 @@ export default function Profile() {
         </h2>
       )}
 
-      {/* {if(userData.userType == "govt") {
-        return (<h1>GOVT</h1>)
-    }
-    else{
-        return(<h1>SMC</h1>)
-    }} */}
-
-      <h1>{currentUser && currentUser.uid}</h1>
-      {<h1>{userData.userType}</h1>}
+      {currentUser && currentUser.uid}
+      {userData.userType}
       <button onClick={logoutHandler}>Logout</button>
     </div>
   );

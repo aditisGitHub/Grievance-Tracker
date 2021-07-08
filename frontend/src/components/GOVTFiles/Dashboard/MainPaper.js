@@ -35,6 +35,16 @@ export default function MainPaper() {
             <span>Quaterly Sales</span>
             <span style={{ fontSize: "25px" }}>January 2021 - March 2021</span>
           </div>
+          {/* <Typography color="textSecondary" variant="h2" component="h2">
+            Sales
+          </Typography> */}
+          <Typography
+            variant="h3"
+            // component="h2"
+            style={{ marginRight: "50px" }}
+          >
+            $38,002
+          </Typography>
           <CardContent>
             {/* Card */}
             <GraphLine />

@@ -2,7 +2,8 @@ import React from "react";
 import Xcards from "./Xcards";
 import MainPaper from "./MainPaper";
 import TableData from "./TableData";
-import "../../dashboard.css";
+// import "../../dashboard.css";
+import "../../../dashboard.css";
 import Typography from "@material-ui/core/Typography";
 
 function Home() {
